@@ -70,7 +70,7 @@ body{
   width: 80vw;
   position: absolute;
   left: 50%;
-  bottom: 100px;
+  bottom: 150px;
   transform: translateX(-50%);
   justify-content: space-evenly;
 
