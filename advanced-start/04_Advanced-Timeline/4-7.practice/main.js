@@ -14,6 +14,41 @@
 // 6. [ ] playing 状態変数の制御
 // 7. [ ] シーズン別のテキスト変更
 
+gsap.set('section',{
+  opacity:0,
+  zIndex: gsap.utils.distribute({
+    base:1,
+    amount:10,
+    from:'end',
+  }),
+})
+
+function title () {
+  const enter = gsap.timeline({
+    defaults:{
+      opacity:0,
+      y:50
+    },
+    paused:true,
+  })
+  .from('.title > h1',{})
+  .from('.title > p',{},'-=.3')
+  .from('.title > button',{},'-=.3')
+
+  const leave = gsap.timeline({
+    defaults:{
+      opacity:0,
+      y:50
+    },
+    paused:true,
+  })
+  .to('.title > button',{})
+  .to('.title > p',{},'-=.3')
+  .to('.title > h1',{},'-=.3')
+
+  return [enter,leave];
+}
+
 function page01(){
   const page = '#page01';
   const enter = gsap.timeline({
@@ -34,7 +69,7 @@ function page01(){
 
   const leave = gsap.timeline({
     defaults:{
-      duration:1,
+      duration:.5,
       opacity:0,
     },
     paused:true,
@@ -50,8 +85,6 @@ function page01(){
 
   return [enter,leave];
 }
-
-
 
 function page02(){
   const page = '#page02';
@@ -86,18 +119,31 @@ function page02(){
   return [enter,leave];
 }
 
-
 function page03(){
   const page = '#page03';
+  gsap.set(page + ' .toy > div',{transformPerspective:600})
   const enter = gsap.timeline({
     defaults:{
       duration:1,
-      opacity:0,
+      // opacity:0,
     },
     paused:true,
   })
   .to(page,{opacity:1})
-
+  .from(page + ' .bg',{scale:1.5},'<')
+  .from(page + ' .toy > div',{
+    stagger:{
+      each:0.1,
+      from:'edges',
+    },
+    ease:'back(1).inOut',
+    y:800,
+    z:500,
+    x:gsap.utils.distribute({
+      base:-200,
+      amount:400,
+    }),
+  })
   const leave = gsap.timeline({
     defaults:{
       duration:1,
@@ -105,10 +151,80 @@ function page03(){
     },
     paused:true,
   })
+  .to(page + ' .toy > div',{
+    stagger:{
+      each:0.1,
+      from:'center',
+    },
+    ease:'back(1).inOut',
+    y:800,
+    z:500,
+    x:gsap.utils.distribute({
+      base:-200,
+      amount:400,
+    }),
+  })
+  .to(page + ' .bg',{scale:1.5},'<')
+  .to(page,{opacity:0},'-=.5')
 
   return [enter,leave];
 }
 
+const [enter1,leave1] = page01();
+const [enter2,leave2] = page02();
+const [enter3,leave3] = page03();
+const [titleEnter,titleLeave] = title();
+
+const enter = [enter1,enter2,enter3];
+const leave = [leave1,leave2,leave3];
+
+const navList = gsap.utils.toArray('.nav li');
+
+let current = 0;
+let next = 0;
+let playing = true;
+
+navList.forEach((li,index)=>{
+
+  const roma = ['I','II','III'];
+  const arabic = [1,2,3];
+
+  li.addEventListener('click',()=>{
+
+    if(!playing){
+      next = index
+
+      if(li.classList.contains('active')) return;
+
+      for(let i = 0; i < navList.length; i++){
+        navList[i].classList.remove('active');
+      }
+      li.classList.add('active');
+
+      const tl = gsap.timeline()
+      .add(leave[current].play())
+      .add(titleLeave.play(),'-=1')
+      .set('.title > h1',{text:`toystory ${roma[next]}`})
+      .set('.title > p',{text:`토이스토리 ${arabic[next]}`},'<')
+      .add(enter[next].play())
+      .add(titleEnter.play())
+
+      tl.eventCallback('onComplete',()=>{
+        current = next;
+        playing = false;
+      })
+
+      playing = true;
+    }
+  })
+})
+
 window.addEventListener('load',()=>{
-  page03()[0].play();
+  const tl = gsap.timeline()
+  .add(enter1.play())
+  .add(titleEnter.play())
+
+  tl.eventCallback('onComplete',()=>{
+    playing = false;
+  })
 })
