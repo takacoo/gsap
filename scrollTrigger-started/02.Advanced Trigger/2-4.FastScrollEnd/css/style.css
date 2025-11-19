@@ -49,6 +49,7 @@ h2{
 .goToTop img{
   transform: translateY(30px);
   opacity: 0;
+  width: 80px;
 }
 
 .goToTop a{
