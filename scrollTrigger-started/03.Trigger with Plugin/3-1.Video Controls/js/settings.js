@@ -14,7 +14,7 @@ gsap.utils.toArray('.section').forEach((item,index)=>{
   let h2 = `
   <h2>section${index + 1}</h2>
   `
-  item.insertAdjacentHTML('beforeend',h2);
+  // item.insertAdjacentHTML('beforeend',h2);
 
 })
 
