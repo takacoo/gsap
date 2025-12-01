@@ -2,17 +2,67 @@ barba.hooks.leave(()=>{
   ScrollTrigger.getAll().forEach(t=>t.kill())
 })
 
-barba.hooks.enter(()=>{
+barba.hooks.after(()=>{
   scrollbar.update();
   scrollbar.scrollTo(0,0);
+  markers()
 })
 
+barba.hooks.beforeEnter((data)=>{
+  if(data.next.namespace !== 'main'){
+    gsap.set('nav',{pointEvents:'none'})
+    gsap.set('nav li',{yPercent:innerHeight})
+  }
+})
+
+function pageEnter(){
+  const heading = gsap.timeline()
+  .from('.line',{scaleX:0,transformOrigin:'left center'})
+  .from('h3 span',{yPercent:100})
+  .from('p span',{yPercent:-100},'<')
+}
+
 function pageLeave(){
+  const nav = gsap.timeline()
+  .set('nav',{pointEvents:'none'})
+  .to('nav li',{
+    yPercent:innerHeight,
+    duration:1.5,
+    ease:'power4.inOut',
+    stagger:{
+      amount:0.2,
+      from:'end',
+    }
+  })
+
   const scale = gsap.timeline()
   .to('.image_container',{scale:1,duration:1.5,ease:'power3.inOut'})
   .to('.image_container > div',{filter:'brightness(1)'})
 
   return scale
+}
+
+function detailLeave(){
+  const tl = gsap.timeline()
+  .to('.visual',{fiFilter:'brightness(0.4)'})
+  .to('.visual',{scale:.5,ease:'power3.inOut',duration:1.5},0)
+
+  const nav = gsap.timeline()
+  .set('nav',{pointEvents:'initial'})
+  .to('nav li',{
+    yPercent:0,
+    duration:1.5,
+    ease:'power4.inOut',
+    stagger:{
+      amount:0.2,
+      from:'start',
+    }
+  })
+
+  const heading = gsap.timeline()
+  .to('.line',{scaleX:1,transformOrigin:'left center'})
+  .to('h3 span',{yPercent:0})
+  .to('p span',{yPercent:0},'<')
 }
 
 function main(){
@@ -35,32 +85,107 @@ function main(){
       }})
       .to(me,{height:'100%'},0)
     })
+
+    li.addEventListener('mouseleave',()=> gsap.to('nav li',{opacity:1}))
   })
 }
 
 function rome(){
   console.log('rome');
+
+  ScrollTrigger.create({
+    trigger:'.section02',
+    start:'top top',
+    end:'+=2000',
+    pin:true,
+    scrub:true,
+    markers:true,
+    animation:gsap.fromTo('.card_container',{x:'100%'},{
+      x(_,t){
+        return -(t.offsetWidth - innerWidth);
+      }
+    }),
+  })
 }
 
 function england(){
   console.log('england');
+
+  const split = new SplitText('.section02 p',{type:'chars'});
+
+  ScrollTrigger.create({
+    trigger:'.section01',
+    start:'bottom center',
+    end:'+=2000',
+    scrub:true,
+    markers:true,
+    animation:gsap.from(split.chars,{opacity:0,stagger:.1}),
+  })
 }
 
 function india(){
   console.log('india');
+
+  ScrollTrigger.create({
+    trigger:'.section02',
+    start:'top top',
+    end:'+=2000',
+    animation:gsap.fromTo('.section02 h3',{letterSpacing:0}, {letterSpacing:150}),
+    pin:true,
+    pinSpacing:false,
+    markers:true,
+    scrub:true,
+  })
 }
 
 function peru(){
   console.log('peru');
+
+  gsap.utils.toArray('#peru section').forEach((section)=>{
+    const pic = section.querySelector('.pic')
+    const descr = section.querySelector('.description')
+
+    const tl = gsap.timeline()
+    .from(pic,{opacity:0,x:-200})
+    .from(descr,{opacity:0,x:200},0)
+
+    ScrollTrigger.create({
+      trigger:section,
+      start:'top center',
+      end:'bottom center',
+      animation:tl,
+      markers:true,
+      scrub:true,
+    })
+  })
+}
+
+function setImageOrder(current){
+  const n = current.namespace;
+
+  const tl = gsap.timeline()
+  .set('.image_container .cover',{hight:0})
+  .set(`.image_container .cover[data-name="${n}"]`,{height:'100%',index:5})
+}
+
+const commonOptions = {
+  sync:true,
+  leave:()=>{
+    scrollbar.scrollTo(0,0,600);
+    return detailLeave();
+  },
+  beforeEnter:(data)=>{
+    setImageOrder(data)
+  },
 }
 
 barba.init({
   views: [
-    {namespace: 'main',beforeEnter:()=>main()},
-    {namespace: 'rome',beforeEnter:()=>rome()},
-    {namespace: 'england',beforeEnter:()=>england()},
-    {namespace: 'india',beforeEnter:()=>india()},
-    {namespace: 'peru',beforeEnter:()=>peru()},
+    {namespace:'main',beforeEnter:()=>main()},
+    {namespace:'rome',beforeEnter:()=>rome()},
+    {namespace:'england',beforeEnter:()=>england()},
+    {namespace:'india',beforeEnter:()=>india()},
+    {namespace:'peru',beforeEnter:()=>peru()},
   ],
   transitions: [
     {
@@ -70,8 +195,30 @@ barba.init({
         return pageLeave();
       },
       enter:()=>{
-
+        return pageEnter();
       },
-    }
+    },
+    {namespace:'rome', ...commonOptions},
+    {namespace:'england', ...commonOptions},
+    {namespace:'india', ...commonOptions},
+    {namespace:'peru', ...commonOptions},
+    // {
+    //   namespace:'rome',
+    //   leave:()=>{
+    //     return detailLeave();
+    //   },
+    // },
+    // {
+    //   namespace:'england',
+    //   sync:true,
+    //   leave:()=>{
+    //     return detailLeave();
+    //   },
+    //   beforeEnter:(data)=>{
+    //     setImageOrder(data)
+    //   },
+    // },
   ],
 })
+
+markers()
