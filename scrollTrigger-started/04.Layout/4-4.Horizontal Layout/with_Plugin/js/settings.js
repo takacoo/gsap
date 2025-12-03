@@ -34,17 +34,44 @@ const options = {
 
 const pluginOptions = {}
 
+class hori extends Scrollbar.ScrollbarPlugin {
+  static pluginName = 'hori-scroller';
+
+  transformDelta(delta, fromEvent) {
+    console.log(delta)
+
+    const { x, y } = delta;
+
+    return {
+      y: 0,
+      x: Math.abs(x) > Math.abs(y) ? x : y,
+    }
+  }
+}
+
+Scrollbar.use(hori,OverscrollPlugin);
 
 const scrollbar = Scrollbar.init(container, {
   ...options,
+  plugins:{
+    overscroll:{
+      effect: 'glow',
+      damping: 0.1,
+      maxOverscroll: 500,
+      glowColor: '#ff0000',
+      // onScroll(position) {
+      //   console.log(position)
+      // }
+    }
+  },
 });
 
 ScrollTrigger.scrollerProxy(container, {
-  scrollTop(value) {
+  scrollLeft(value) {
     if (arguments.length) {
-      scrollbar.scrollTop = value; // setter
+      scrollbar.scrollLeft = value; // setter
     }
-    return scrollbar.scrollTop; // getter
+    return scrollbar.scrollLeft; // getter
   },
 });
 
