@@ -39,11 +39,11 @@ body{
 
 
 .h-section02{
-  /* width: 200vw !important; */
+  width: 200vw !important;
 }
 
 .box{
-  width: 100px;
-  height: 100px;
+  width: 50vw;
+  height: 100vh;
   background: orange
 }

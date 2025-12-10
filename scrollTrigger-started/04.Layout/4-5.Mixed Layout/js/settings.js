@@ -37,7 +37,16 @@ gsap.utils.toArray('.section').forEach((item, index) => {
 gsap.registerPlugin(ScrollTrigger);
 
 
+class DisableScroll extends Scrollbar.ScrollbarPlugin {
+  static pluginName = 'DisableScroll';
 
+  transformDelta(delta) {
+    delta['x'] = 0;
+    return delta;
+  }
+}
+
+Scrollbar.use(DisableScroll);
 
 
 const container = document.querySelector('#container');
