@@ -25,6 +25,7 @@
   <link rel="apple-touch-icon" href="assets/img/_common/apple-touch-icon.png"><!-- 180×180 -->
   <link rel="manifest" href="assets/js/manifest.webmanifest">
 	<!-- css -->
+	<link rel="stylesheet" href="assets/css/setteing.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -48,7 +49,175 @@
 	</header>
 
 	<main class="l-container">
-		<p>テスト</p>
+
+    <!-- Section 1: Hero Parallax -->
+    <section class="section hero" id="hero">
+      <div class="parallax layer-bg" data-depth="0.1">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&h=1080&fit=crop" alt="background">
+      </div>
+      <div class="parallax layer-1" data-depth="0.3">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&fit=crop" alt="layer1">
+      </div>
+      <div class="parallax layer-2" data-depth="0.5">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&h=400&fit=crop" alt="layer2">
+      </div>
+      <div class="parallax layer-3" data-depth="0.7">
+        <h1>GSAP Showcase</h1>
+      </div>
+      <div class="parallax layer-overlay" data-depth="0.2"></div>
+    </section>
+
+    <!-- Section 2: SVG Drawing + MotionPath -->
+    <section class="section svg-section">
+      <h2>SVG Drawing & Motion Path</h2>
+      <div class="svg-container">
+        <svg id="svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+          <!-- Main Path -->
+          <path class="path" d="M 50 200 Q 200 50, 400 200 T 750 200" fill="none" stroke="#333" stroke-width="3"/>
+          
+          <!-- Connection Lines -->
+          <line class="line01" x1="50" y1="200" x2="150" y2="350" stroke="#6067f3" stroke-width="2"/>
+          <line class="line02" x1="250" y1="125" x2="250" y2="350" stroke="#6067f3" stroke-width="2"/>
+          <line class="line03" x1="400" y1="200" x2="450" y2="350" stroke="#6067f3" stroke-width="2"/>
+          <line class="line04" x1="550" y1="125" x2="600" y2="350" stroke="#6067f3" stroke-width="2"/>
+          <line class="line05" x1="750" y1="200" x2="750" y2="350" stroke="#6067f3" stroke-width="2"/>
+          
+          <!-- Balls -->
+          <circle class="ball01" cx="50" cy="200" r="10" fill="#ff6b6b"/>
+          <circle class="ball02" cx="150" cy="350" r="8" fill="#6067f3" opacity="0"/>
+          <circle class="ball03" cx="250" cy="350" r="8" fill="#6067f3" opacity="0"/>
+          <circle class="ball04" cx="450" cy="350" r="8" fill="#6067f3" opacity="0"/>
+          
+          <!-- Text Labels -->
+          <text class="text01" x="150" y="380" text-anchor="middle" opacity="0">Point 1</text>
+          <text class="text02" x="250" y="380" text-anchor="middle" opacity="0">Point 2</text>
+          <text class="text03" x="450" y="380" text-anchor="middle" opacity="0">Point 3</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 3: Text Effects (SplitText) -->
+    <section class="section text-section">
+      <h2>3D Text Animation</h2>
+      <div class="text-container">
+        <p>
+          GSAP (GreenSock Animation Platform) is a robust JavaScript animation library that makes it easy to animate anything on the web. With its powerful timeline system and ScrollTrigger plugin, you can create stunning scroll-based animations that bring your websites to life. The library is trusted by major companies worldwide for its performance and ease of use.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 4: Horizontal Scroll Gallery -->
+    <section class="section horizontal-section">
+      <h2>Horizontal Scroll Gallery</h2>
+      <div class="horizontal-wrapper">
+        <div class="horizontal-content">
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=600&h=800&fit=crop" alt="gallery1">
+            <p>Image 01</p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1682687221038-404cb8830901?w=600&h=800&fit=crop" alt="gallery2">
+            <p>Image 02</p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=600&h=800&fit=crop" alt="gallery3">
+            <p>Image 03</p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1682687220923-c58b9a4592ae?w=600&h=800&fit=crop" alt="gallery4">
+            <p>Image 04</p>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1682687221073-1b1616d545d5?w=600&h=800&fit=crop" alt="gallery5">
+            <p>Image 05</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Video Scrub (Canvas) -->
+    <section class="section canvas-section">
+      <h2>Image Sequence Scrub</h2>
+      <div class="canvas-wrapper">
+        <canvas id="canvas"></canvas>
+        <div class="canvas-overlay">
+          <h3>Scroll to animate</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: 3D Stagger Text -->
+    <section class="section stagger-section">
+      <h2>3D Stagger Animation</h2>
+      <div class="utils">
+        <div>GSAP</div>
+        <div>ScrollTrigger</div>
+        <div>Timeline</div>
+        <div>MotionPath</div>
+        <div>DrawSVG</div>
+        <div>SplitText</div>
+      </div>
+    </section>
+
+    <!-- Section 7: Scroll Progress -->
+    <section class="section progress-section">
+      <h2>Scroll Progress Indicator</h2>
+      
+      <!-- Progress Bar -->
+      <div class="progressHolder">
+        <div class="progress"></div>
+        <div class="percent"><span>0</span>%</div>
+      </div>
+
+      <!-- Content for scrolling -->
+      <div class="scroll-content">
+        <div class="content-block">
+          <h3>Feature 01</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="content-block">
+          <h3>Feature 02</h3>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+        <div class="content-block">
+          <h3>Feature 03</h3>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+      </div>
+
+      <!-- SVG Progress Shapes -->
+      <div class="svg-progress">
+        <svg class="circleContainer" width="200" height="200" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="80" fill="none" stroke="#6067f3" stroke-width="4"/>
+        </svg>
+        <svg class="rectContainer" width="200" height="200" viewBox="0 0 200 200">
+          <rect x="20" y="20" width="160" height="160" fill="none" stroke="#ff6b6b" stroke-width="4"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Section 8: Layered Pinning -->
+    <section class="section layered-section">
+      <h2>Layered Pinning Effect</h2>
+      <div class="layer-container">
+        <div class="layer" data-index="1">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="layer1">
+          <h3>Layer 01</h3>
+        </div>
+        <div class="layer" data-index="2">
+          <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&h=600&fit=crop" alt="layer2">
+          <h3>Layer 02</h3>
+        </div>
+        <div class="layer" data-index="3">
+          <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop" alt="layer3">
+          <h3>Layer 03</h3>
+        </div>
+        <div class="layer" data-index="4">
+          <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop" alt="layer4">
+          <h3>Layer 04</h3>
+        </div>
+      </div>
+    </section>
 	</main>
 	<footer class="l-footer">
 		<div class="l-footer__logo"><a href=""></a></div>
@@ -59,7 +228,17 @@
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-	<script src="assets/js/init.min.js"></script>
+	<!-- GSAP & Plugins -->
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/DrawSVGPlugin.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
+	<script src="https://unpkg.com/split-type"></script>
+	<script src="https://cdn.jsdelivr.net/npm/smooth-scrollbar@8.8.4/dist/smooth-scrollbar.js"></script>
+	
+	<!-- Custom Scripts -->
+	<script src="assets/js/settings.js"></script>
+	<script src="assets/js/markers.js"></script>
+	<script src="assets/js/main.js"></script>
 </body>
 
 </html>

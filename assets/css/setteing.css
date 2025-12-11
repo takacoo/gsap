@@ -1,0 +1,578 @@
+/* ===========================
+   Reset & Base Styles
+   =========================== */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    overflow: hidden;
+    background: #fff;
+  }
+  
+  #container {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .section {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 60px 20px;
+  }
+  
+  .section h2 {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 700;
+    z-index: 10;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* ===========================
+     Section 1: Hero Parallax
+     =========================== */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background: #000;
+  }
+  
+  .parallax {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .layer-bg {
+    z-index: 1;
+  }
+  
+  .layer-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+  
+  .layer-1 {
+    z-index: 2;
+    left: 10%;
+  }
+  
+  .layer-1 img {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    opacity: 0.7;
+  }
+  
+  .layer-2 {
+    z-index: 3;
+    right: 10%;
+  }
+  
+  .layer-2 img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    opacity: 0.8;
+  }
+  
+  .layer-3 {
+    z-index: 4;
+  }
+  
+  .layer-3 h1 {
+    font-size: 8rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  
+  .layer-overlay {
+    z-index: 5;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 100%);
+  }
+  
+  /* ===========================
+     Section 2: SVG Drawing
+     =========================== */
+  .svg-section {
+    background: #f5f5f5;
+  }
+  
+  .svg-container {
+    width: 90%;
+    max-width: 900px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+  }
+  
+  #svg {
+    width: 100%;
+    height: auto;
+  }
+  
+  #svg text {
+    font-size: 14px;
+    fill: #333;
+    font-weight: 600;
+  }
+  
+  /* ===========================
+     Section 3: Text Effects
+     =========================== */
+  .text-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .text-section h2 {
+    color: #fff;
+  }
+  
+  .text-container {
+    width: 90%;
+    max-width: 800px;
+    perspective: 1000px;
+  }
+  
+  .text-container p {
+    font-size: 1.8rem;
+    line-height: 2.5;
+    color: #fff;
+    font-weight: 300;
+  }
+  
+  /* SplitText用 */
+  .text-container .cover {
+    overflow: hidden;
+  }
+  
+  /* ===========================
+     Section 4: Horizontal Scroll
+     =========================== */
+  .horizontal-section {
+    background: #1a1a1a;
+    overflow: hidden;
+    padding: 0;
+  }
+  
+  .horizontal-section h2 {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    z-index: 100;
+  }
+  
+  .horizontal-wrapper {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .horizontal-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 40px;
+    padding: 0 100px;
+  }
+  
+  .gallery-item {
+    flex-shrink: 0;
+    width: 400px;
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .gallery-item p {
+    color: #fff;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  /* ===========================
+     Section 5: Canvas Section
+     =========================== */
+  .canvas-section {
+    background: #000;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .canvas-section h2 {
+    position: absolute;
+    top: 60px;
+    color: #fff;
+    z-index: 100;
+  }
+  
+  .canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #canvas {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+  }
+  
+  .canvas-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    pointer-events: none;
+  }
+  
+  .canvas-overlay h3 {
+    color: #fff;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    opacity: 0.8;
+  }
+  
+  /* ===========================
+     Section 6: 3D Stagger
+     =========================== */
+  .stagger-section {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    perspective: 1000px;
+  }
+  
+  .stagger-section h2 {
+    color: #fff;
+  }
+  
+  .utils {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    perspective: 1000px;
+  }
+  
+  .utils > div {
+    width: 200px;
+    height: 200px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+  
+  /* ===========================
+     Section 7: Progress
+     =========================== */
+  .progress-section {
+    background: #fff;
+    min-height: 200vh;
+  }
+  
+  .progressHolder {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 40px;
+    background: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .progress {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #6067f3, #ff6b6b);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  
+  .percent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+  
+  .scroll-content {
+    margin-top: 200px;
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  .content-block {
+    margin-bottom: 300px;
+    padding: 40px;
+    background: #f5f5f5;
+    border-radius: 15px;
+  }
+  
+  .content-block h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #6067f3;
+  }
+  
+  .content-block p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #666;
+  }
+  
+  .svg-progress {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+  }
+  
+  .svg-progress svg {
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  }
+  
+  /* ===========================
+     Section 8: Layered Pinning
+     =========================== */
+  .layered-section {
+    background: #2c3e50;
+    min-height: 300vh;
+    padding-top: 100px;
+  }
+  
+  .layered-section h2 {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    z-index: 100;
+  }
+  
+  .layer-container {
+    width: 100%;
+    max-width: 1000px;
+    position: relative;
+  }
+  
+  .layer {
+    width: 100%;
+    height: 80vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  
+  .layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .layer h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    z-index: 10;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+  }
+  
+  .layer[data-index="1"] {
+    z-index: 4;
+  }
+  
+  .layer[data-index="2"] {
+    z-index: 3;
+  }
+  
+  .layer[data-index="3"] {
+    z-index: 2;
+  }
+  
+  .layer[data-index="4"] {
+    z-index: 1;
+  }
+  
+  /* ===========================
+     Footer
+     =========================== */
+  .footer {
+    background: #000;
+    color: #fff;
+    min-height: 50vh;
+    text-align: center;
+  }
+  
+  .footer p {
+    margin: 10px 0;
+    font-size: 1.2rem;
+  }
+  
+  /* ===========================
+     Smooth Scrollbar
+     =========================== */
+  .scrollbar-track {
+    background: rgba(0,0,0,0.1) !important;
+  }
+  
+  .scrollbar-thumb {
+    background: rgba(96, 103, 243, 0.5) !important;
+    border-radius: 10px !important;
+  }
+  
+  /* ===========================
+     Responsive
+     =========================== */
+  @media (max-width: 1024px) {
+    .layer-3 h1 {
+      font-size: 5rem;
+    }
+    
+    .section h2 {
+      font-size: 2.5rem;
+    }
+    
+    .gallery-item {
+      width: 300px;
+    }
+    
+    .gallery-item img {
+      height: 450px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .layer-3 h1 {
+      font-size: 3rem;
+      letter-spacing: 5px;
+    }
+    
+    .section h2 {
+      font-size: 2rem;
+    }
+    
+    .text-container p {
+      font-size: 1.3rem;
+      line-height: 2;
+    }
+    
+    .gallery-item {
+      width: 250px;
+    }
+    
+    .gallery-item img {
+      height: 350px;
+    }
+    
+    .utils > div {
+      width: 150px;
+      height: 150px;
+      font-size: 1.2rem;
+    }
+    
+    .progressHolder {
+      width: 90%;
+    }
+    
+    .layer h3 {
+      font-size: 2.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .layer-3 h1 {
+      font-size: 2rem;
+    }
+    
+    .layer-1 img {
+      width: 250px;
+      height: 180px;
+    }
+    
+    .layer-2 img {
+      width: 200px;
+      height: 150px;
+    }
+    
+    .section h2 {
+      font-size: 1.5rem;
+    }
+    
+    .text-container p {
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+  }
