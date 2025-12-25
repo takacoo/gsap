@@ -21,7 +21,14 @@ gsap.defaults({
   ease: 'none',
 });
 
-// ローディングアニメーション
+// ===========================
+// Master Timeline
+// ===========================
+const masterTimeline = gsap.timeline();
+
+// ===========================
+// Loading
+// ===========================
 const loadingTimeline = gsap.timeline();
 
 // 左右のSVGが登場
@@ -72,10 +79,10 @@ loadingTimeline.to('.progress-bar-fill', {
   }
 }, '-=0.01')
 .to('.gsap-fg', {
-  clipPath: 'inset(0 0 0% 0)', // 右から左に変更
+  clipPath: 'inset(0 0 0% 0)',
   duration: 2.5,
   ease: 'power5.in'
-}, '<'); // 同じタイミングで開始
+}, '<');
 
 // SVGが脈動するアニメーション
 loadingTimeline.to('.svg-left, .svg-right', {
@@ -116,9 +123,168 @@ loadingTimeline.to('#loading', {
   }
 }, '-=0.3');
 
-// GSDevToolsでローディングタイムラインをデバッグ
-GSDevTools.create({
-  animation: loadingTimeline,
-  container: document.body,
-  paused: true // デバッグしやすいように最初は一時停止
+
+// ===========================
+// Hero
+// ===========================
+const heroTimeline = gsap.timeline();
+
+// 背景画像のスケールアニメーション
+heroTimeline.to('.hero-bg', {
+  scale: 1.1,
+  duration: .5,
+  ease: 'power3.inOut'
 });
+
+// hero-leftをじわーっと登場（左下から）
+heroTimeline.fromTo('.hero-left',
+  {
+    opacity: 0,
+    x: -100,
+    y: 100
+  },
+  {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    duration: 1.5,
+    ease: 'power2.out'
+  },
+  '-=0.5'
+);
+
+// hero-rightをじわーっと登場（右上から）
+heroTimeline.fromTo('.hero-right',
+  {
+    opacity: 0,
+    x: 100,
+    y: -100
+  },
+  {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    duration: 1.5,
+    ease: 'power2.out'
+  },
+  '-=1.3'
+);
+
+// テキストアニメーション（callではなくaddで確実に実行）
+heroTimeline.add(() => {
+  const heroTextSVG = document.querySelector('.hero-text-svg');
+  
+  if (!heroTextSVG) {
+    console.error('hero-text-svg not found!');
+    return;
+  }
+  
+  const text = heroTextSVG.textContent.trim();
+  heroTextSVG.textContent = '';
+  
+  // テキストを2行に分割
+  const line1 = 'GSAP Animation ';
+  const line2 = 'マッチョver.';
+  
+  let charIndex = 0;
+  
+  // 1行目
+  line1.split('').forEach((char) => {
+    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+    tspan.textContent = char;
+    tspan.setAttribute('stroke-dasharray', '500');
+    tspan.setAttribute('stroke-dashoffset', '500');
+    
+    const color = charIndex % 2 === 0 ? '#667eea' : '#764ba2';
+    tspan.setAttribute('stroke', color);
+    
+    heroTextSVG.appendChild(tspan);
+    charIndex++;
+  });
+  
+  // 2行目
+  line2.split('').forEach((char, index) => {
+    const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+    tspan.textContent = char;
+    tspan.setAttribute('stroke-dasharray', '500');
+    tspan.setAttribute('stroke-dashoffset', '500');
+    tspan.setAttribute('font-size', '50');
+    
+    if (index === 0) {
+      tspan.setAttribute('x', '50%');
+      tspan.setAttribute('dy', '2em');
+    }
+    
+    const color = charIndex % 2 === 0 ? '#667eea' : '#764ba2';
+    tspan.setAttribute('stroke', color);
+    
+    heroTextSVG.appendChild(tspan);
+    charIndex++;
+  });
+  
+  const chars = heroTextSVG.querySelectorAll('tspan');
+  
+  console.log('Characters created:', chars.length); // デバッグ用
+  
+  chars.forEach((char, index) => {
+    gsap.to(char, {
+      strokeDashoffset: 0,
+      duration: 0.5,
+      delay: index * 0.08,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        const color = index % 2 === 0 ? '#667eea' : '#764ba2';
+        gsap.to(char, {
+          fill: color,
+          duration: 0.3
+        });
+      }
+    });
+  });
+}, '-=0.8'); // タイミングを調整
+
+// 画像がポップに震えるアニメーション
+heroTimeline.add(() => {
+  gsap.set('.hero-left, .hero-right', {
+    transformOrigin: '50% 50%'
+  });
+  
+  gsap.to('.hero-left', {
+    x: '+=15',
+    y: '+=15',
+    rotation: 8,
+    duration: 1.2, // もっと長く
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    repeatDelay: 0
+  });
+  
+  gsap.to('.hero-right', {
+    x: '-=15',
+    y: '-=15',
+    rotation: -8,
+    duration: 1.2,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut',
+    repeatDelay: 0,
+    delay: 0.6
+  });
+}, '+=0.5');
+
+
+// ===========================
+// Master Timeline Management
+// ===========================
+masterTimeline.add(loadingTimeline);
+masterTimeline.add(heroTimeline);
+
+
+
+GSDevTools.create({
+  animation: masterTimeline,
+  container: document.body,
+});
+
+masterTimeline.play();
