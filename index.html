@@ -50,36 +50,31 @@
 
 	<main class="l-container">
 
-  <!-- ローディング画面 -->
-  <div id="loading">
-    <div class="loader-container">
-      <!-- SVGコンテナ -->
+  <!-- ローディング -->
+  <div class="loading" id="loading">
+    <div class="loading-container">
       <div class="svg-container">
-        <!-- 左側のSVG -->
         <img src="assets/dist/front/left.svg" alt="Left decoration" class="svg-left">
-        <!-- 右側のSVG -->
         <img src="assets/dist/front/right.svg" alt="Right decoration" class="svg-right">
       </div>
-
-      <!-- 中央のテキスト -->
       <div class="text-container">
         <div class="gsap-text">
           <div class="gsap-bg">GSAP</div>
           <div class="gsap-fg">GSAP</div>
         </div>
-        <!-- プログレスバー -->
         <div class="progress-bar-container">
           <div class="progress-bar-fill"></div>
         </div>
-        <div class="loader-percent">0%</div>
+        <div class="loading-percent">0%</div>
       </div>
     </div>
   </div>
 
+	<!-- Hero -->
 	<section id="hero" class="hero">
 		<img src="assets/dist/front/hero-bg.webp" alt="" class="hero-bg">
 		<div class="hero-text-container">
-			<svg class="hero-svg" viewBox="0 0 1400 400">
+			<svg class="hero-svg" viewBox="0 0 1400 200">
 				<text class="hero-text-svg" x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">
 					GSAP Animation マッチョver.
 				</text>
@@ -89,6 +84,23 @@
 		<img src="assets/dist/front/hero-right.webp" alt="" class="hero-right">
 	</section>
 
+	<!-- Slider -->
+	<section id="slider" class="slider">
+		<div class="slider-container">
+			<img src="assets/dist/front/img-rotation_01.webp" class="rotation-img" data-index="0">
+			<img src="assets/dist/front/img-rotation_02.webp" class="rotation-img" data-index="1">
+			<img src="assets/dist/front/img-rotation_03.webp" class="rotation-img" data-index="2">
+			<img src="assets/dist/front/img-rotation_04.webp" class="rotation-img" data-index="3">
+			<img src="assets/dist/front/img-rotation_05.webp" class="rotation-img" data-index="4">
+			<img src="assets/dist/front/img-rotation_06.webp" class="rotation-img" data-index="5">
+			<img src="assets/dist/front/img-rotation_07.webp" class="rotation-img" data-index="6">
+			<img src="assets/dist/front/img-rotation_08.webp" class="rotation-img" data-index="7">
+			<img src="assets/dist/front/img-rotation_09.webp" class="rotation-img" data-index="8">
+			<img src="assets/dist/front/img-rotation_10.webp" class="rotation-img" data-index="9">
+			<img src="assets/dist/front/img-rotation_11.webp" class="rotation-img" data-index="10">
+			<img src="assets/dist/front/img-rotation_12.webp" class="rotation-img" data-index="11">
+		</div>
+	</section>
 	</main>
 	<footer class="l-footer">
 		<div class="l-footer__logo"><a href=""></a></div>
@@ -100,18 +112,18 @@
 
 	<!-- GSAP Core -->
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-	
+
 	<!-- GSAP Plugins -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script> -->
-   <script src="assets/js/GSDevTools.js"></script>
+  <script src="assets/js/GSDevTools.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/DrawSVGPlugin.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/MotionPathPlugin.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/GSDevTools.min.js"></script>
-	
+
 	<!-- Other Libraries -->
 	<script src="https://unpkg.com/split-type"></script>
 	<script src="https://cdn.jsdelivr.net/npm/smooth-scrollbar@8.8.4/dist/smooth-scrollbar.js"></script>
-	
+
 	<!-- Custom Scripts -->
 	<script src="assets/js/settings.js"></script>
 	<script src="assets/js/markers.js"></script>
