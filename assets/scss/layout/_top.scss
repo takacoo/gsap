@@ -183,6 +183,56 @@ header {
 }
 
 /*----------------------------------------
+	Season
+----------------------------------------*/
+.season {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: $color-black;
+  padding: 80px 0;
+  &-container {
+    width: 100%;
+  }
+  &-title {
+    font-size: 60px;
+    font-weight: 900;
+    color: $color-white;
+    text-align: center;
+    font-family: 'Arial Black', sans-serif;
+    margin-bottom: 60px;
+  }
+  &-item {
+    ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+      margin-bottom: 40px;
+      align-items: center;
+      width: max-content;
+      li {
+        flex-shrink: 0;
+        img {
+          width: 400px;
+          height: 280px;
+          object-fit: cover;
+        }
+        &.season-text {
+          width: 400px;
+          font-size: 80px;
+          font-weight: 900;
+          font-family: 'Arial Black', sans-serif;
+          color: $color-white;
+          will-change: transform;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+/*----------------------------------------
 	Rotation
 ----------------------------------------*/
 .rotation {

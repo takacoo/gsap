@@ -31,6 +31,8 @@ const masterTimeline = gsap.timeline();
 ----------------------------------------*/
 const loadingTimeline = gsap.timeline();
 
+document.body.style.overflow = 'hidden';
+
 // シルエット
 loadingTimeline.to('.svg-left, .svg-right', {
   opacity: .7,
@@ -108,6 +110,11 @@ loadingTimeline.to('#loading', {
   y: '-100%',
   duration: 0.8,
   ease: 'power3.inOut',
+  onStart: () => {
+    window.scrollTo(0, 0);
+    document.scrollingElement.scrollTo(0, 0);
+    document.body.style.overflow = '';
+  },
   onComplete: () => {
     const loadingEl = document.getElementById('loading');
     if (loadingEl) {
@@ -250,6 +257,60 @@ heroTimeline.add(() => {
 }, '+=0.5');
 
 /*----------------------------------------
+	Season Horizontal Scroll
+----------------------------------------*/
+const seasonTimeline = gsap.timeline();
+const initSeason = () => {
+  gsap.registerPlugin(ScrollTrigger);
+  const seasonItems = [
+    { selector: '.season-item_1', isLeftToRight: true },
+    { selector: '.season-item_2', isLeftToRight: false },
+    { selector: '.season-item_3', isLeftToRight: true },
+    { selector: '.season-item_4', isLeftToRight: false }
+  ];
+  seasonItems.forEach(item => {
+    const w = document.querySelector(item.selector);
+    if (!w) return;
+    const [x, xEnd] = item.isLeftToRight 
+      ? [-(w.scrollWidth), 0] 
+      : ['100%', (w.scrollWidth - window.innerWidth) * -1];
+    gsap.fromTo(w, { x }, {
+      x: xEnd,
+      scrollTrigger: {
+        trigger: w,
+        scrub: 0.5,
+        start: 'top bottom',
+        end: 'bottom top'
+      }
+    });
+    // 文字アニメーション
+    const seasonText = w.querySelector('.season-text');
+    if (seasonText) {
+      gsap.to(seasonText, {
+        scrollTrigger: {
+          trigger: w,
+          scrub: 0.5,
+          start: 'top bottom',
+          end: 'bottom top',
+          onUpdate: (self) => {
+            const progress = self.progress;
+            // 真ん中付近 (40%〜60%) で最大スケール
+            const centerProgress = Math.abs(progress - 0.5) * 2;
+            const scale = 1 + (1 - centerProgress) * 0.5;
+            const rotation = (progress - 0.5) * 30;
+            gsap.set(seasonText, {
+              scale: scale,
+              rotation: rotation,
+              color: progress > 0.4 && progress < 0.6 ? '#fff' : '#603ea5'
+            });
+          }
+        }
+      });
+    }
+  });
+};
+
+/*----------------------------------------
 	Rotation
 ----------------------------------------*/
 // マーキーテキストアニメーション
@@ -315,6 +376,10 @@ const initMarquee = () => {
   }
 };
 
+/*----------------------------------------
+	Season
+----------------------------------------*/
+const rotationTimeline = gsap.timeline();
 const rotationViewer = {
   currentIndex: 0,
   totalImages: 12,
@@ -522,16 +587,20 @@ const rotationViewer = {
 ----------------------------------------*/
 masterTimeline.add(loadingTimeline);
 masterTimeline.add(heroTimeline);
+masterTimeline.add(seasonTimeline);
+masterTimeline.add(rotationTimeline);
+
 
 // 360度ビューアーの初期化
 document.addEventListener('DOMContentLoaded', () => {
   rotationViewer.init();
   initMarquee();
+  initSeason();
 });
 
-GSDevTools.create({
-  animation: masterTimeline,
-  container: document.body,
-});
+// GSDevTools.create({
+//   animation: masterTimeline,
+//   container: document.body,
+// });
 
 masterTimeline.play();
