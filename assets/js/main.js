@@ -249,14 +249,285 @@ heroTimeline.add(() => {
   });
 }, '+=0.5');
 
+/*----------------------------------------
+	Rotation
+----------------------------------------*/
+// マーキーテキストアニメーション
+const initMarquee = () => {
+  // 上のマーキー（右から左）
+  const track = document.querySelector('.rotation-marquee:not(.-bottom) .rotation-marquee__track');
+  if (track) {
+    const firstTitle = track.querySelector('.rotation-title');
+    if (firstTitle) {
+      const titleWidth = firstTitle.offsetWidth + 100;
+      // 右から左へ
+      gsap.to(track, {
+        x: -titleWidth,
+        duration: 10,
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % titleWidth)
+        }
+      });
+      const titles = track.querySelectorAll('.rotation-title');
+      titles.forEach(title => {
+        gsap.to(title, {
+          backgroundPosition: '200% center',
+          duration: 3,
+          ease: 'none',
+          repeat: -1
+        });
+      });
+    }
+  }
+  // 下のマーキー（左から右）
+  const trackBottom = document.querySelector('.rotation-marquee.-bottom .rotation-marquee__track');
+  if (trackBottom) {
+    const firstTitle = trackBottom.querySelector('.rotation-title');
+    if (firstTitle) {
+      const titleWidth = firstTitle.offsetWidth + 100;
+      // 初期位置を左端に設定
+      gsap.set(trackBottom, { x: -titleWidth });
+      // 左から右へ
+      gsap.to(trackBottom, {
+        x: 0,
+        duration: 10,
+        ease: 'none',
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => {
+            const val = parseFloat(x);
+            return val >= 0 ? -titleWidth : val;
+          })
+        }
+      });
+      const titles = trackBottom.querySelectorAll('.rotation-title');
+      titles.forEach(title => {
+        gsap.to(title, {
+          backgroundPosition: '200% center',
+          duration: 3,
+          ease: 'none',
+          repeat: -1
+        });
+      });
+    }
+  }
+};
+
+const rotationViewer = {
+  currentIndex: 0,
+  totalImages: 12,
+  isPlaying: false,
+  autoPlayInterval: null,
+  images: [],
+  observer: null,
+  init() {
+    this.images = document.querySelectorAll('.rotation-img');
+    this.totalImages = this.images.length;
+    // ボタン要素取得
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playBtn = document.getElementById('playBtn');
+    // イベントリスナー設定
+    if (prevBtn) prevBtn.addEventListener('click', () => this.prev());
+    if (nextBtn) nextBtn.addEventListener('click', () => this.next());
+    if (playBtn) playBtn.addEventListener('click', () => this.togglePlay());
+    // 初期表示
+    this.showImage(0);
+    this.updateIndexDisplay();
+    // キーボード操作
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') this.prev();
+      if (e.key === 'ArrowRight') this.next();
+      if (e.key === ' ') {
+        e.preventDefault();
+        this.togglePlay();
+      }
+    });
+    // ドラッグ操作
+    this.setupDragControls();
+    // IntersectionObserver でセクション検知
+    this.setupSectionObserver();
+  },
+  showImage(index) {
+    // 現在の画像をフェードアウト
+    if (this.images[this.currentIndex]) {
+      gsap.to(this.images[this.currentIndex], {
+        opacity: 0,
+        duration: 0.15,
+        ease: 'power2.inOut'
+      });
+    }
+    this.currentIndex = index;
+    if (this.images[this.currentIndex]) {
+      gsap.to(this.images[this.currentIndex], {
+        opacity: 1,
+        duration: 0.15,
+        ease: 'power2.inOut'
+      });
+    }
+    this.updateIndexDisplay();
+    // BANG! 表示チェック
+    this.checkBang();
+  },
+  next() {
+    const nextIndex = (this.currentIndex + 1) % this.totalImages;
+    this.showImage(nextIndex);
+  },
+  prev() {
+    const prevIndex = (this.currentIndex - 1 + this.totalImages) % this.totalImages;
+    this.showImage(prevIndex);
+  },
+  togglePlay() {
+    this.isPlaying = !this.isPlaying;
+    const playIcon = document.querySelector('.play-icon');
+    const pauseIcon = document.querySelector('.pause-icon');
+    if (this.isPlaying) {
+      // 再生開始
+      if (playIcon) playIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'block';
+      this.autoPlayInterval = setInterval(() => {
+        this.next();
+      }, 150);
+    } else {
+      // 再生停止
+      if (playIcon) playIcon.style.display = 'block';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+      if (this.autoPlayInterval) {
+        clearInterval(this.autoPlayInterval);
+        this.autoPlayInterval = null;
+      }
+    }
+  },
+  updateIndexDisplay() {
+    const currentIndexEl = document.getElementById('currentIndex');
+    const totalIndexEl = document.getElementById('totalIndex');
+    if (currentIndexEl) {
+      currentIndexEl.textContent = String(this.currentIndex + 1).padStart(2, '0');
+    }
+    if (totalIndexEl) {
+      totalIndexEl.textContent = String(this.totalImages).padStart(2, '0');
+    }
+  },
+  checkBang() {
+    const bangRight = document.querySelector('.rotation-bang.-right');
+    const bangLeft = document.querySelector('.rotation-bang.-left');
+    // right
+    if (this.currentIndex === 9 && bangRight) {
+      gsap.to(bangRight, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.3,
+        ease: 'back.out(2)',
+        onComplete: () => {
+          gsap.to(bangRight, {
+            scale: 0,
+            opacity: 0,
+            duration: 0.2,
+            delay: 0.3,
+            ease: 'back.in(2)'
+          });
+        }
+      });
+    }
+    // left
+    if (this.currentIndex === 3 && bangLeft) {
+      gsap.to(bangLeft, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.3,
+        ease: 'back.out(2)',
+        onComplete: () => {
+          gsap.to(bangLeft, {
+            scale: 0,
+            opacity: 0,
+            duration: 0.2,
+            delay: 0.3,
+            ease: 'back.in(2)'
+          });
+        }
+      });
+    }
+  },
+  setupDragControls() {
+    const container = document.querySelector('.rotation-container');
+    if (!container) return;
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+    const sensitivity = 30;
+    const onStart = (e) => {
+      isDragging = true;
+      startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      currentX = startX;
+      if (this.isPlaying) {
+        this.togglePlay();
+      }
+    };
+    const onMove = (e) => {
+      if (!isDragging) return;
+      currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      const deltaX = currentX - startX;
+      if (Math.abs(deltaX) >= sensitivity) {
+        if (deltaX > 0) {
+          this.prev();
+        } else {
+          this.next();
+        }
+        startX = currentX;
+      }
+    };
+    const onEnd = () => {
+      isDragging = false;
+    };
+    // マウスイベント
+    container.addEventListener('mousedown', onStart);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onEnd);
+    // タッチイベント
+    container.addEventListener('touchstart', onStart, { passive: true });
+    container.addEventListener('touchmove', onMove, { passive: true });
+    container.addEventListener('touchend', onEnd);
+    // ドラッグ時の画像選択を防ぐ
+    container.style.userSelect = 'none';
+    container.style.webkitUserSelect = 'none';
+  },
+  setupSectionObserver() {
+    const section = document.getElementById('rotation');
+    if (!section) return;
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // セクションに入ったら自動再生開始
+          if (!this.isPlaying) {
+            this.togglePlay();
+          }
+        } else {
+          // セクションから出たら再生停止
+          if (this.isPlaying) {
+            this.togglePlay();
+          }
+        }
+      });
+    }, {
+      threshold: 0.5 // セクションの50%が表示されたら検知
+    });
+    this.observer.observe(section);
+  }
+};
 
 /*----------------------------------------
 	Master Timeline Management
 ----------------------------------------*/
-// masterTimeline.add(loadingTimeline);
+masterTimeline.add(loadingTimeline);
 masterTimeline.add(heroTimeline);
 
-
+// 360度ビューアーの初期化
+document.addEventListener('DOMContentLoaded', () => {
+  rotationViewer.init();
+  initMarquee();
+});
 
 GSDevTools.create({
   animation: masterTimeline,

@@ -84,23 +84,69 @@
 		<img src="assets/dist/front/hero-right.webp" alt="" class="hero-right">
 	</section>
 
-	<!-- Slider -->
-	<section id="slider" class="slider">
-		<div class="slider-container">
-			<img src="assets/dist/front/img-rotation_01.webp" class="rotation-img" data-index="0">
-			<img src="assets/dist/front/img-rotation_02.webp" class="rotation-img" data-index="1">
-			<img src="assets/dist/front/img-rotation_03.webp" class="rotation-img" data-index="2">
-			<img src="assets/dist/front/img-rotation_04.webp" class="rotation-img" data-index="3">
-			<img src="assets/dist/front/img-rotation_05.webp" class="rotation-img" data-index="4">
-			<img src="assets/dist/front/img-rotation_06.webp" class="rotation-img" data-index="5">
-			<img src="assets/dist/front/img-rotation_07.webp" class="rotation-img" data-index="6">
-			<img src="assets/dist/front/img-rotation_08.webp" class="rotation-img" data-index="7">
-			<img src="assets/dist/front/img-rotation_09.webp" class="rotation-img" data-index="8">
-			<img src="assets/dist/front/img-rotation_10.webp" class="rotation-img" data-index="9">
+	<!-- Rotation -->
+	<section id="rotation" class="rotation">
+		<div class="rotation-marquee">
+			<div class="rotation-marquee__track">
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+			</div>
+		</div>
+		<div class="rotation-container">
+			<img src="assets/dist/front/img-rotation_01.webp" class="rotation-img" data-index="00">
+			<img src="assets/dist/front/img-rotation_02.webp" class="rotation-img" data-index="01">
+			<img src="assets/dist/front/img-rotation_03.webp" class="rotation-img" data-index="02">
+			<img src="assets/dist/front/img-rotation_04.webp" class="rotation-img" data-index="03">
+			<img src="assets/dist/front/img-rotation_05.webp" class="rotation-img" data-index="04">
+			<img src="assets/dist/front/img-rotation_06.webp" class="rotation-img" data-index="05">
+			<img src="assets/dist/front/img-rotation_07.webp" class="rotation-img" data-index="06">
+			<img src="assets/dist/front/img-rotation_08.webp" class="rotation-img" data-index="07">
+			<img src="assets/dist/front/img-rotation_09.webp" class="rotation-img" data-index="08">
+			<img src="assets/dist/front/img-rotation_10.webp" class="rotation-img" data-index="09">
 			<img src="assets/dist/front/img-rotation_11.webp" class="rotation-img" data-index="10">
 			<img src="assets/dist/front/img-rotation_12.webp" class="rotation-img" data-index="11">
 		</div>
+		<!-- BANG! -->
+		<div class="rotation-bang -right">BANG!</div>
+		<div class="rotation-bang -left">BANG!</div>
+		<!-- コントロール -->
+		<div class="rotation-controls">
+			<button class="rotation-btn rotation-btn--prev" id="prevBtn" aria-label="前の画像">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<polyline points="15 18 9 12 15 6"></polyline>
+				</svg>
+			</button>
+			<button class="rotation-btn rotation-btn--play" id="playBtn" aria-label="自動再生">
+				<svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+					<polygon points="8 5 19 12 8 19"></polygon>
+				</svg>
+				<svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+					<rect x="6" y="4" width="4" height="16"></rect>
+					<rect x="14" y="4" width="4" height="16"></rect>
+				</svg>
+			</button>
+			<button class="rotation-btn rotation-btn--next" id="nextBtn" aria-label="次の画像">
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<polyline points="9 18 15 12 9 6"></polyline>
+				</svg>
+			</button>
+		</div>
+		<!-- インデックス -->
+		<div class="rotation-index">
+			<span id="currentIndex">01</span> / <span id="totalIndex">12</span>
+		</div>
+		<div class="rotation-marquee -bottom">
+			<div class="rotation-marquee__track">
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+				<h2 class="rotation-title">全方位マッチョ回転中!</h2>
+			</div>
+		</div>
 	</section>
+
 	</main>
 	<footer class="l-footer">
 		<div class="l-footer__logo"><a href=""></a></div>
